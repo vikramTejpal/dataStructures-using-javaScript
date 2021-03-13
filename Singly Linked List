@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singly Linked List</title>
+</head>
+
+<body>
+    <script>
+        console.log("connected")
+        class Node {
+            constructor(val) {
+                this.val = val
+                this.next = null
+            }
+        }
+        class SLL {
+            constructor() {
+                this.head = null
+                this.tail = null
+                this.length = 0
+            }
+            //add a node at the end of the list
+            push(val) {
+                const newNode = new Node(val)
+                if (this.length === 0) {
+                    this.head = newNode
+                    this.tail = this.head
+                    this.length++
+                    return this
+                } else {
+                    this.tail.next = newNode
+                    this.tail = newNode
+                    this.length++
+                    return this
+                }
+            }
+            //remove the node from the end of the list
+            pop() {
+                let currentNode = this.head
+                let prevNode = null
+                if (this.length === 0) {
+                    return undefined
+                }
+                while (currentNode.next) {
+                    prevNode = currentNode
+                    currentNode = currentNode.next
+                }
+                prevNode.next = null
+                this.tail = prevNode
+                this.length--
+                //console.log(currentNode)
+                return currentNode
+            }
+            //removing the node from the begininnig of the list
+            shift() {
+                if (!this.head) return undefined
+                let newHead = this.head.next
+                this.head = newHead
+                this.length--
+                return this
+            }
+            //adding a node at the beginning of the list
+            unshift(val) {
+                const newNode = new Node(val)
+                if (!this.head) {
+                    this.head = newNode
+                    this.tail = this.head
+                } else {
+                    newNode.next = this.head
+                    this.head = newNode
+                }
+                this.length++
+                return this
+            }
+            //retrieving a node by it's position in the linked list
+            get(index) {
+                let currentNode = this.head
+                if (index < 0 || index >= this.length) return null
+                for (let i = 0; i < index; i++) {
+                    currentNode = currentNode.next
+                }
+                return currentNode
+            }
+            //insert a node at a particular index
+            insert(index, val) {
+                if (index < 0 || index > this.length) return false
+                if (index === this.length) return this.push(val)
+                if (index === 0) return this.unshift(val)
+                let currentNode = this.head
+                let prevNode = null
+                let newNode = new Node(val)
+
+                for (let i = 0; i < index; i++) {
+                    prevNode = currentNode
+                    currentNode = currentNode.next
+                }
+                prevNode.next = newNode
+                newNode.next = currentNode
+                this.length++
+                return this
+            }
+            //takes an index an dremoves the specific index
+            remove(index) {
+                if (index < 0 || index > this.length) return undefined
+                if (index === 0) return this.shift()
+                if (index === this.length - 1) return this.pop()
+                let remNode = this.get(index)
+                let prevNode = this.get(index - 1)
+                prevNode.next = remNode.next
+                this.length--
+                return this
+            }
+            //Reversing a LinkedList
+            reverse() {
+                var currentNode = this.head
+                this.head = this.tail
+                this.tail = currentNode
+
+                let prevNode = null,
+                    nextNode
+                for (let i = 0; i < this.length; i++) {
+                    nextNode = currentNode.next
+                    currentNode.next = prevNode
+                    prevNode = currentNode
+                    currentNode = nextNode
+                    // nextNode = currentNode.next
+                }
+                return this
+            }
+            //ip: 1-->2-->3-->4-->null
+            //op: null<--1<--2<--3<--4
+            reverse1() {
+                let currentNode = this.head
+                let nextNode = currentNode.next
+                let prevNode = null
+                this.tail = currentNode
+                for (let i = 1; i <= this.length; i++) {
+                    currentNode.next = prevNode
+                    if (i === this.length) {
+                        this.head = currentNode
+                        return this
+                    }
+                    prevNode = currentNode
+                    currentNode = nextNode
+                    nextNode = nextNode.next
+                }
+                return this
+            }
+
+            print() {
+                let currentNode = this.head
+                let arr = []
+                for (let i = 0; i < this.length; i++) {
+                    arr.push(currentNode.val)
+                    currentNode = currentNode.next
+                }
+                return arr
+            }
+        }
+        let ll = new SLL()
+        ll.push(2)
+        ll.push(4)
+        ll.push(6)
+        ll.push(8)
+        ll.push(10)
+
+        ll.pop()
+
+        ll.shift()
+
+        ll.unshift(0)
+
+        ll.insert(1, "TWO")
+        ll.insert(5, "Final")
+
+        ll.remove(5)
+        ll.remove(1)
+        //console.log(ll.get(2))
+
+        console.log(ll)
+
+        console.log(ll.print())
+
+        console.log(ll.reverse())
+        ll.insert(4, "Final")
+        console.log(ll.print())
+    </script>
+</body>
+
+</html>
