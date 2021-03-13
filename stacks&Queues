@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacks + Queues</title>
+</head>
+<script>
+    console.warn("stacks and queues")
+    console.error("PUSH and POP operations in STACK should always be O(1)")
+    class Node {
+        constructor(val) {
+            this.val = val
+            this.next = null
+        }
+    }
+    class Stack {
+        constructor() {
+            this.first = null
+            this.last = null
+            this.length = 0
+        }
+        push(val) {
+            let newNode = new Node(val)
+            if (this.length === 0) {
+                this.first = newNode
+                this.last = newNode
+            } else {
+                let temp = this.first
+                this.first = newNode
+                this.first.next = temp
+            }
+            this.length++
+        }
+        pop() {
+            if (this.length === 0) return undefined
+            let temp = this.first
+            this.first = this.first.next
+            this.length--
+            return temp
+        }
+    }
+    let stack = new Stack()
+    stack.push("first")
+    stack.push(2)
+    stack.push(3)
+    stack.push(4)
+    stack.pop()
+    console.log(stack)
+
+    class Queue {
+        //FIFO--First In First Out
+        constructor() {
+            this.first = null
+            this.last = null
+            this.size = 0
+        }
+        enqueue(val) {
+            let newNode = new Node(val)
+            if (this.size === 0) {
+                this.first = newNode
+                this.last = this.first
+            } else {
+                this.last.next = newNode
+                this.last = newNode
+            }
+            this.size++
+            return this
+        }
+        dequeue() {
+            if (this.size === 0) {
+                return undefined
+            } else {
+                var temp = this.first
+                let newFirst = this.first.next
+                this.first.next = null
+                this.first = newFirst
+            }
+            this.size--
+            return temp
+        }
+    }
+    let queue = new Queue()
+    queue.enqueue(1)
+    queue.enqueue(2)
+    queue.enqueue(3)
+    queue.enqueue(4)
+    queue.dequeue()
+    console.log(queue)
+
+
+    const rev = (s) => {
+        for (let i = 0; i < s.length; i++) {
+            s.push(arr[i])
+        }
+        s.splice(s.length / 2)
+        return s
+    }
+    console.log(rev(["h", "e", "l", "l", "o"]))
+</script>
+
+</html>
