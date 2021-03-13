@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DLL</title>
+</head>
+
+<body>
+    <script>
+        console.log("Doubly Linked List")
+        class Node {
+            constructor(value) {
+                this.prev = null
+                this.value = value
+                this.next = null
+            }
+        }
+        class DoubleLinkedList {
+            constructor() {
+                this.head = null
+                this.tail = null
+                this.length = 0
+            }
+            //O(1)
+            push(val) {
+                let newNode = new Node(val)
+                if (this.length === 0) {
+                    this.head = newNode
+                    this.tail = this.head
+                } else {
+                    this.tail.next = newNode
+                    newNode.prev = this.tail
+                    this.tail = newNode
+                }
+                this.length++
+                return this
+            }
+            //O(1)
+            pop() {
+                if (!this.head) return undefined
+                let oTail = this.tail
+                let newTail = this.tail.prev
+                newTail.next = null
+                this.tail = newTail
+                this.length--
+                return oTail
+            }
+            //O(1)
+            shift() {
+                if (this.length === 0) return undefined
+                if (this.length === 1) {
+                    this.pop()
+                }
+                let oHead = this.head
+                let newHead = this.head.next
+                newHead.prev = null
+                this.head = newHead
+                this.length--
+                return oHead
+            }
+            unshift(val) {
+                t
+                //o(1)
+                let newNode = new Node(val)
+                this.head.prev = newNode
+                newNode.next = this.head
+                this.head = newNode
+                this.length++
+                return this
+            }
+            get(idx) {
+                //o(n)
+                if (idx < 0 || idx > this.length) return undefined
+                let currentNode = this.head
+                for (let i = 0; i < idx; i++) {
+                    currentNode = currentNode.next
+                }
+                return currentNode
+            }
+            set(idx, val) {
+                //o(1)
+                let node = this.get(idx)
+                node.value = val
+                return this
+            }
+            insert(val, idx) {
+                //o(idx)
+                let newNode = new Node(val)
+                let currentNode = this.head
+                if (idx === this.length) {
+                    this.push(val)
+                    return this
+                }
+                if (idx === 0) {
+                    this.unshift(val)
+                    return this
+                }
+                if (idx > this.length || idx < 0) return undefined
+                for (let i = 0; i < idx; i++) {
+                    currentNode = currentNode.next
+                }
+                let prevNode = currentNode.prev
+                prevNode.next = newNode
+                newNode.prev = prevNode
+                newNode.next = currentNode
+                currentNode.prev = newNode
+                this.length++
+                return this
+            }
+            remove(idx) {
+                let toRemove = this.get(idx)
+                let prev = toRemove.prev
+                let next = toRemove.next
+                prev.next = next
+                next.prev = prev
+                this.length--
+                return this
+            }
+        }
+        //1-->2-->3-->4
+        let sll = new DoubleLinkedList()
+        sll.push(1)
+        sll.push(2)
+        sll.push(3)
+        sll.push(4)
+
+        sll.pop()
+
+        sll.shift()
+
+        sll.unshift(0)
+
+        sll.get(1)
+
+        sll.set(1, 10)
+
+        sll.insert("final", 3)
+        sll.insert(11, 2)
+        sll.remove(1)
+        console.log(sll)
+    </script>
+</body>
+
+</html>
